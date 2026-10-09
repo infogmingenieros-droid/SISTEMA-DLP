@@ -1,0 +1,1252 @@
+/* =========================================================
+   DATAVAULT DLP
+   Administrador + subordinado + login
+   Tema: gris grafito y azul
+   ========================================================= */
+
+:root {
+  --dv-theme-graphite: #252c34;
+  --dv-theme-graphite-dark: #1d252d;
+  --dv-theme-blue: #1677d2;
+  --dv-theme-blue-hover: #1065b7;
+  --dv-theme-background: #f2f3f5;
+  --dv-theme-card: #ffffff;
+  --dv-theme-border: #dfe5eb;
+  --dv-theme-text: #243447;
+  --dv-theme-muted: #718096;
+
+  --bg: #f2f3f5;
+  --navy: #252c34;
+  --navy2: #1d252d;
+  --line: #dfe5eb;
+  --muted: #718096;
+  --dv-blue: #1677d2;
+  --dv-text: #243447;
+  --dv-border: #dfe5eb;
+}
+
+/* =========================================================
+   BASE Y DISTRIBUCIÓN
+   ========================================================= */
+
+.dv-sub-upload-start {
+  display: none;
+}
+
+body {
+  background: var(--dv-theme-background);
+  color: var(--dv-theme-text);
+}
+
+body #appSection,
+body #appBody,
+body #mainArea {
+  background: var(--dv-theme-background) !important;
+  color: var(--dv-theme-text);
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) #mainArea > main {
+  max-width: none;
+  width: 100%;
+  padding: 22px 24px;
+}
+
+/* =========================================================
+   MENÚ LATERAL
+   ========================================================= */
+
+body #sidebar.dv-app-sidebar {
+  background: linear-gradient(
+    165deg,
+    var(--dv-theme-graphite),
+    var(--dv-theme-graphite-dark)
+  ) !important;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #f4f6f8 !important;
+}
+
+body #sidebar .nav-item {
+  min-height: 48px;
+  background: transparent !important;
+  color: #dce3eb !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+body #sidebar .nav-item > i,
+body #sidebar .nav-item > .dv-svg-icon {
+  color: #dce3eb !important;
+}
+
+body #sidebar .nav-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+body #sidebar .nav-item.active {
+  background: linear-gradient(
+    100deg,
+    #1684ed,
+    #096bd7
+  ) !important;
+
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+body #sidebar .nav-item.active > i,
+body #sidebar .nav-item.active > .dv-svg-icon {
+  color: #ffffff !important;
+}
+
+body #sidebar .dv-brand-copy {
+  color: #ffffff !important;
+}
+
+body #sidebar .dv-sidebar-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+body #sidebar .dv-storage-box > span,
+body #sidebar .dv-storage-box b {
+  color: #e5ebf2 !important;
+  font-size: 14px !important;
+}
+
+body #sidebar .dv-storage-box small {
+  color: #b5c0cc !important;
+  font-size: 12px !important;
+}
+
+body #sidebar .dv-storage-track {
+  background: rgba(255, 255, 255, 0.13) !important;
+}
+
+body #sidebar .dv-storage-track i {
+  background: #3696ef !important;
+}
+
+body #sidebar .dv-side-logout {
+  color: #e0e7ef !important;
+}
+
+body #sidebar .dv-side-logout:hover {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   BARRA SUPERIOR
+   ========================================================= */
+
+body #topbar.dv-app-topbar {
+  background: linear-gradient(
+    100deg,
+    #303943,
+    #252c34
+  ) !important;
+
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(25, 35, 45, 0.12) !important;
+}
+
+body #topbar .dv-menu-toggle,
+body #topbar .top-icon-btn {
+  color: #e4eaf1 !important;
+}
+
+body #topbar .dv-top-search {
+  background: #f7f9fb !important;
+  color: #718096 !important;
+}
+
+body #topbar .dv-top-search input {
+  background: transparent !important;
+  color: #243447 !important;
+  font-size: 15px !important;
+}
+
+body #topbar .dv-top-search input::placeholder {
+  color: #7e8da0 !important;
+}
+
+body #topbar .dv-top-search:focus-within {
+  outline: 3px solid rgba(54, 150, 239, 0.35) !important;
+}
+
+body #topbar .top-avatar {
+  background: #f2f5f8 !important;
+  color: #29415b !important;
+}
+
+body #topbar .dv-profile-trigger-copy strong {
+  color: #ffffff !important;
+}
+
+body #topbar .dv-profile-trigger-copy > span {
+  color: #c4ced9 !important;
+}
+
+/* =========================================================
+   TARJETAS Y TÍTULOS
+   ========================================================= */
+
+body #mainArea :is(
+  .dashboard-card,
+  .file-content-panel,
+  .dv-home-rail > div
+) {
+  background: var(--dv-theme-card) !important;
+  border-color: var(--dv-theme-border) !important;
+  box-shadow: 0 2px 7px rgba(36, 52, 71, 0.035) !important;
+}
+
+body #mainArea .file-explorer-panel {
+  background: #f7f8fa !important;
+  border-color: var(--dv-theme-border) !important;
+}
+
+body #mainArea :is(
+  .page-title h2,
+  .section-head h3,
+  .metric-value
+) {
+  color: #243447 !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .section-head h3 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+body #mainArea .metric-label {
+  color: #354b63 !important;
+}
+
+body #mainArea :is(
+  .page-title p,
+  .section-head p,
+  .metric-trend
+) {
+  color: var(--dv-theme-muted) !important;
+}
+
+/* =========================================================
+   BANNER DE BIENVENIDA
+   Conserva la fotografía del estilo base.
+   ========================================================= */
+
+body #mainArea .dv-home-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #24445f !important;
+}
+
+body #mainArea .dv-home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    100deg,
+    rgba(29, 37, 45, 0.88) 0%,
+    rgba(35, 65, 93, 0.65) 48%,
+    rgba(22, 119, 210, 0.08) 100%
+  ) !important;
+}
+
+body #mainArea .dv-home-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+body #mainArea .dv-home-hero :is(h1, h2, h3) {
+  color: #ffffff !important;
+}
+
+body #mainArea .dv-home-hero p {
+  color: #edf3fa !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+
+/* =========================================================
+   TIPOGRAFÍA DE TABLAS Y EXPLORADOR
+   ========================================================= */
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .data-table td,
+  .data-table td p,
+  .data-table td span,
+  .data-table td div,
+  .data-table td b,
+  .data-table td strong,
+  .data-table th,
+  .tree-item,
+  .tree-subitem,
+  .tree-folder,
+  .breadcrumb,
+  .dv-rail-copy b,
+  .metric-label
+) {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .data-table th,
+  .data-table td:first-child,
+  .metric-label,
+  .dv-rail-copy b
+) {
+  font-weight: 600 !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .data-table td b,
+  .data-table td strong
+) {
+  font-weight: 700 !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .data-table td,
+  .data-table th
+) {
+  padding: 15px 12px !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .data-table td .status-pill,
+  .dv-state-pill,
+  .dv-unit-sub,
+  .metric-trend,
+  .dv-rail-copy span,
+  .section-head p,
+  .file-content-footer,
+  .dv-op-legacy,
+  .dv-op-pending
+) {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+body #mainArea .data-table thead,
+body #mainArea .data-table th {
+  background: #f0f3f6 !important;
+  color: #52657b !important;
+}
+
+body #mainArea .data-table td {
+  color: #60738a;
+  border-color: #e9edf2 !important;
+}
+
+body #mainArea .data-table td:first-child {
+  color: #283e55 !important;
+}
+
+body #mainArea .data-table tbody tr:hover > td {
+  background-color: #f7f9fc !important;
+}
+
+/* =========================================================
+   CAMPOS Y BOTONES
+   ========================================================= */
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .input-modern,
+  .filter-bar input,
+  .filter-bar select,
+  .explorer-search input,
+  .page-title p
+) {
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .primary-btn,
+  .secondary-btn,
+  .dv-drive-toolbar-btn,
+  .dv-op-btn,
+  .dv-request-tabs button
+) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 14px !important;
+  border-radius: 7px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) :is(
+  .dv-drive-toolbar-btn i,
+  .dv-op-btn i
+) {
+  font-size: 14px !important;
+}
+
+body #mainArea .primary-btn {
+  background: var(--dv-theme-blue) !important;
+  border-color: var(--dv-theme-blue) !important;
+  color: #ffffff !important;
+}
+
+body #mainArea .primary-btn:hover {
+  background: var(--dv-theme-blue-hover) !important;
+  border-color: var(--dv-theme-blue-hover) !important;
+}
+
+body #mainArea .secondary-btn {
+  background: #ffffff !important;
+  border-color: #d8e1e9 !important;
+  color: #36516c !important;
+}
+
+body #mainArea .secondary-btn:hover {
+  background: #edf4fb !important;
+  border-color: #b8d2eb !important;
+}
+
+body #mainArea .input-modern {
+  background: #ffffff !important;
+  border-color: #d8e1e9 !important;
+  color: #243447 !important;
+}
+
+body #mainArea .input-modern:focus {
+  border-color: var(--dv-theme-blue) !important;
+  box-shadow: 0 0 0 3px rgba(22, 119, 210, 0.12) !important;
+}
+
+/* =========================================================
+   APROBACIONES DEL ADMINISTRADOR
+   ========================================================= */
+
+body[data-dv-role="jefe"] .dv-approval-user-main strong {
+  color: #283e55 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] .dv-approval-user-main small {
+  color: #718096 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] :is(
+  .dv-approval-chip,
+  .dv-approval-user-pending
+) {
+  padding: 5px 9px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] .dv-approval-user-summary td {
+  padding: 15px 12px !important;
+  background: #f4f6f8 !important;
+  border-color: #dfe5eb !important;
+}
+
+body[data-dv-role="jefe"] .dv-approval-user-toggle {
+  gap: 10px;
+  font-size: 14px !important;
+}
+
+/* =========================================================
+   REGLAS DLP
+   ========================================================= */
+
+body[data-dv-role="jefe"] #view-reglas {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] #view-reglas .page-title h2 {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+body[data-dv-role="jefe"] #view-reglas .page-title p {
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] #view-reglas .section-head h3 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+body[data-dv-role="jefe"] #view-reglas .section-head p {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] #dlpRulesContainer,
+body[data-dv-role="jefe"] #dlpRulesContainer :is(
+  table,
+  th,
+  td,
+  p,
+  span,
+  div,
+  small,
+  strong,
+  b,
+  label
+) {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+body[data-dv-role="jefe"] #dlpRulesContainer table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+body[data-dv-role="jefe"] #dlpRulesContainer :is(th, td) {
+  padding: 15px 12px !important;
+  vertical-align: middle;
+  border-color: #e9edf2 !important;
+}
+
+body[data-dv-role="jefe"] #dlpRulesContainer th {
+  background: #f0f3f6 !important;
+  color: #52657b !important;
+  font-weight: 700 !important;
+}
+
+body[data-dv-role="jefe"] #dlpRulesContainer td:first-child {
+  color: #283e55 !important;
+  font-weight: 600 !important;
+}
+
+body[data-dv-role="jefe"] #dlpRulesContainer :is(
+  strong,
+  b,
+  .status-pill,
+  .dv-state-pill
+) {
+  font-weight: 700 !important;
+}
+
+body[data-dv-role="jefe"] #view-reglas .info-strip,
+body[data-dv-role="jefe"] #view-reglas .info-strip :is(
+  span,
+  strong,
+  small,
+  b
+) {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+body[data-dv-role="jefe"] #view-reglas .info-strip {
+  padding: 14px 16px !important;
+  gap: 12px;
+}
+
+body[data-dv-role="jefe"] #view-reglas .info-strip > span {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+body[data-dv-role="jefe"] #view-reglas .info-strip strong {
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   PAGINACIÓN: ESTILOS
+   La cantidad de registros depende del JavaScript.
+   ========================================================= */
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid #e2ebf3;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination span {
+  margin-right: auto;
+  color: #718096;
+  font-size: 14px !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination button {
+  min-width: 38px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #d8e1e9;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #36516c;
+  font-size: 14px !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination button:not(:disabled):hover,
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination button.is-active,
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination button[aria-current="page"] {
+  background: var(--dv-theme-blue) !important;
+  border-color: var(--dv-theme-blue) !important;
+  color: #ffffff !important;
+}
+
+body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   DISTRIBUCIÓN PROPIA DEL SUBORDINADO
+   ========================================================= */
+
+body[data-dv-role="subordinado"] .dv-home-layout {
+  min-height: calc(100dvh - 110px);
+  grid-template-rows: auto auto 1fr;
+  align-items: stretch;
+}
+
+body[data-dv-role="subordinado"] .dv-home-recent {
+  align-self: stretch;
+}
+
+body[data-dv-role="subordinado"] .dv-home-rail > div {
+  flex: 1;
+}
+
+body[data-dv-role="subordinado"] .dv-storage-track {
+  display: none;
+}
+
+body[data-dv-role="subordinado"] .tree-item[data-folder="__TRASH__"],
+body[data-dv-role="subordinado"] .tree-item[data-folder="__SHARED__"] {
+  display: none !important;
+}
+
+/* Vista de subida */
+body[data-dv-role="subordinado"].dv-upload-mode :is(
+  .file-explorer-panel,
+  .file-content-head,
+  #dropZone,
+  .file-content-footer
+) {
+  display: none !important;
+}
+
+body[data-dv-role="subordinado"].dv-upload-mode .file-content-panel {
+  width: 100%;
+  grid-column: 1 / -1;
+  padding: 24px;
+  min-height: calc(100dvh - 230px);
+}
+
+body[data-dv-role="subordinado"].dv-upload-mode .dv-sub-upload-start {
+  display: block;
+  padding: 28px;
+  margin-bottom: 20px;
+  border: 2px dashed #b6d5ef;
+  border-radius: 12px;
+  background: #f5faff;
+}
+
+.dv-sub-upload-start h3 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.dv-sub-upload-start p {
+  margin: 0 0 20px;
+}
+
+.dv-sub-upload-start > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Vista de papelera */
+body[data-dv-role="subordinado"].dv-trash-mode .file-explorer-panel {
+  display: none !important;
+}
+
+body[data-dv-role="subordinado"].dv-trash-mode .file-content-panel {
+  grid-column: 1 / -1;
+}
+
+/* =========================================================
+   LOGIN: DISTRIBUCIÓN Y PALETA
+   ========================================================= */
+
+#loginSection.login-shell {
+  min-height: 100dvh;
+  padding: 24px;
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(22, 119, 210, 0.07),
+      transparent 40%
+    ),
+    linear-gradient(135deg, #eceff2, #f7f8fa) !important;
+}
+
+#loginSection .login-card {
+  display: grid !important;
+  grid-template-columns: 46% 54% !important;
+  width: 100%;
+  max-width: 1120px !important;
+  min-height: 620px !important;
+  margin: auto;
+  overflow: hidden;
+  border: 1px solid #dfe5eb !important;
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 70px rgba(37, 44, 52, 0.14) !important;
+}
+
+/* Sobrescribe hidden solo en el panel visual del login */
+body #loginSection .login-card > .login-visual {
+  display: flex !important;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 44px !important;
+  overflow: hidden;
+  color: #ffffff;
+  background: linear-gradient(
+    145deg,
+    #252c34 0%,
+    #293642 55%,
+    #244d72 100%
+  ) !important;
+}
+
+#loginSection .login-visual > .relative {
+  position: relative;
+  z-index: 1;
+}
+
+#loginSection .login-architecture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      130deg,
+      transparent 0 34%,
+      rgba(255, 255, 255, 0.09) 34.2% 35%,
+      transparent 35.2%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0 13%,
+      rgba(255, 255, 255, 0.07) 13.2% 13.6%,
+      transparent 13.8% 28%,
+      rgba(255, 255, 255, 0.06) 28.2% 28.6%,
+      transparent 28.8%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0 1px,
+      transparent 1px 42px
+    );
+  transform: skewY(-9deg) scale(1.35);
+  transform-origin: center;
+}
+
+#loginSection .login-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 80% 25%,
+      rgba(54, 150, 239, 0.18),
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 45%,
+      rgba(17, 24, 31, 0.45)
+    ) !important;
+}
+
+#loginSection .login-visual h1 {
+  color: #ffffff !important;
+  font-size: clamp(28px, 3vw, 38px) !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+#loginSection .login-visual p.text-sm {
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+#loginSection .login-form-panel {
+  display: flex !important;
+  align-items: center;
+  min-width: 0;
+  padding: 44px !important;
+  background: #ffffff !important;
+}
+
+#loginSection .login-form-panel > div {
+  width: 100%;
+  max-width: 440px;
+  margin-inline: auto;
+}
+
+/* Logo compacto para móviles */
+#loginSection .login-form-panel > div > div:first-child {
+  display: none !important;
+}
+
+#loginSection .login-form-panel h2 {
+  color: #252c34 !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+#loginSection .login-kicker {
+  color: #1677d2 !important;
+}
+
+#loginSection .login-label {
+  color: #34485d !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+#loginSection .login-input-wrap {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  border-color: #d8e1e9 !important;
+  background: #ffffff !important;
+}
+
+#loginSection .login-input-wrap input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  color: #243447 !important;
+  font-size: 15px !important;
+}
+
+#loginSection .login-input-wrap:focus-within {
+  border-color: #1677d2 !important;
+  box-shadow: 0 0 0 3px rgba(22, 119, 210, 0.12) !important;
+}
+
+#loginSection .login-submit {
+  width: 100%;
+  min-height: 50px;
+  background: linear-gradient(
+    100deg,
+    #1684ed,
+    #096bd7
+  ) !important;
+  border-color: #1677d2 !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+#loginSection .login-submit:hover {
+  background: #1065b7 !important;
+  border-color: #1065b7 !important;
+}
+
+#loginSection .login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#loginSection .login-remember input {
+  accent-color: #1677d2;
+}
+
+/* =========================================================
+   ADAPTACIÓN A PANTALLAS PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  body[data-dv-role="subordinado"] #view-inicio .dv-home-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "hero"
+      "metrics"
+      "recent"
+      "rail";
+    min-height: 0;
+  }
+
+  body[data-dv-role="subordinado"] .dv-home-rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  #loginSection.login-shell {
+    padding: 20px;
+  }
+
+  #loginSection .login-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+    max-width: 520px !important;
+    min-height: auto !important;
+  }
+
+  body #loginSection .login-card > .login-visual {
+    display: none !important;
+  }
+
+  #loginSection .login-form-panel {
+    padding: 32px !important;
+  }
+
+  #loginSection .login-form-panel > div > div:first-child {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+}
+
+@media (max-width: 650px) {
+  body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) #mainArea > main {
+    padding: 16px 12px;
+  }
+
+  body[data-dv-role="subordinado"] .dv-home-rail {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-dv-role="subordinado"] .dv-file-operation-bar {
+    flex-wrap: wrap;
+  }
+
+  body[data-dv-role="subordinado"].dv-upload-mode .file-content-panel {
+    padding: 12px;
+  }
+
+  body[data-dv-role="jefe"] #view-reglas .info-strip {
+    flex-wrap: wrap;
+  }
+
+  body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination {
+    justify-content: center;
+  }
+
+  body:is([data-dv-role="subordinado"], [data-dv-role="jefe"]) .dv-sub-pagination > span {
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #loginSection.login-shell {
+    padding: 12px;
+  }
+
+  #loginSection .login-form-panel {
+    padding: 28px 20px !important;
+  }
+
+  #loginSection .login-form-panel h2 {
+    font-size: 27px !important;
+  }
+}
+
+/* Ocultar el buscador superior en las demás secciones */
+body #topbar .dv-top-search {
+  display: none !important;
+}
+
+/* Mostrar únicamente en Mis archivos / Explorador */
+body:has(#view-gestor.active):not(.dv-upload-mode):not(.dv-trash-mode)
+#topbar .dv-top-search {
+  display: flex !important;
+}
+
+/* =========================================================
+   DATAVAULT · MIS ARCHIVOS (SUBORDINADO)
+   Ancho adaptativo: muestra la tabla completa SIN obligar
+   al usuario a desplazarse horizontalmente.
+   No altera la alineación del texto ni las vistas de admin.
+   ========================================================= */
+body[data-dv-role="subordinado"] #view-gestor,
+body[data-dv-role="subordinado"] #view-gestor .file-manager-shell,
+body[data-dv-role="subordinado"] #view-gestor .file-content-panel,
+body[data-dv-role="subordinado"] #view-gestor #dropZone {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Evitar que rutas y nombres largos ensanchen el panel. */
+body[data-dv-role="subordinado"] #view-gestor #dropZone {
+  overflow-x: hidden !important;
+}
+body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  white-space: normal !important;
+}
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th,
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table td {
+  box-sizing: border-box;
+  padding: 12px 8px !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  vertical-align: middle;
+}
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th:nth-child(1) { width: 25%; }
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th:nth-child(2) { width: 18%; }
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th:nth-child(3) { width: 12%; }
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th:nth-child(4) { width: 12%; }
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th:nth-child(5) { width: 13%; }
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table th:nth-child(6) { width: 20%; }
+
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table td:first-child > .flex,
+body[data-dv-role="subordinado"] #view-gestor #dropZone .data-table td:first-child > .flex > div:last-child,
+body[data-dv-role="subordinado"] #view-gestor #dropZone .dv-folder-toggle {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+body[data-dv-role="subordinado"] #view-gestor #dropZone .dv-folder-toggle {
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+body[data-dv-role="subordinado"] #view-gestor #dropZone .dv-op-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 5px !important;
+  max-width: 100%;
+}
+body[data-dv-role="subordinado"] #view-gestor #dropZone .dv-op-btn {
+  min-width: 0 !important;
+  padding: 0 8px !important;
+}
+
+/* Por debajo de 1200 px dejamos el árbol encima del inventario.
+   Así la tabla dispone de todo el ancho de la pantalla. */
+@media (max-width: 1200px) {
+  body[data-dv-role="subordinado"] #view-gestor .file-manager-shell.subordinate-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  body[data-dv-role="subordinado"] #view-gestor .file-explorer-panel {
+    border-right: 0 !important;
+    border-bottom: 1px solid #e4eaed !important;
+  }
+}
+
+/* En celulares el inventario pasa a tarjetas: las seis columnas
+   siguen visibles, pero en vertical y sin barra horizontal. */
+@media (max-width: 720px) {
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table,
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > thead {
+    display: none !important;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 10px;
+    padding: 12px;
+    border-bottom: 1px solid #e6edf3;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden) > td {
+    display: block !important;
+    min-width: 0;
+    padding: 5px 0 !important;
+    border: 0 !important;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(1),
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(2),
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(6) {
+    grid-column: 1 / -1;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(2)::before {
+    content: "Ubicación: ";
+    font-weight: 700;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(3)::before {
+    content: "Integridad ";
+    display: block;
+    font-weight: 700;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(4)::before {
+    content: "Estado ";
+    display: block;
+    font-weight: 700;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(5)::before {
+    content: "Fecha ";
+    display: block;
+    font-weight: 700;
+  }
+  body[data-dv-role="subordinado"] #view-gestor #dropZone .dv-op-btn {
+    min-height: 36px !important;
+  }
+}
+
+/* Ocultar el paginador del inventario mientras el subordinado sube archivos. */
+body[data-dv-role="subordinado"].dv-upload-mode #dv-pages-files {
+  display: none !important;
+}
+
+/* =========================================================
+   ADMINISTRADOR - EXPLORADOR DE ARCHIVOS
+   La tabla ocupa su panel sin desplazamiento lateral y utiliza
+   la misma paginación inferior que Mis archivos/Mis solicitudes.
+   No altera las solicitudes, el dashboard ni los permisos de Drive.
+   ========================================================= */
+body[data-dv-role="jefe"] #view-gestor,
+body[data-dv-role="jefe"] #view-gestor .file-manager-shell,
+body[data-dv-role="jefe"] #view-gestor .file-content-panel,
+body[data-dv-role="jefe"] #view-gestor #dropZone {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+body[data-dv-role="jefe"] #view-gestor #dropZone {
+  overflow-x: hidden !important;
+}
+
+body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  white-space: normal !important;
+}
+
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th,
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td {
+  box-sizing: border-box;
+  padding: 12px 8px !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  vertical-align: middle;
+}
+
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th:nth-child(1) { width: 25%; }
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th:nth-child(2) { width: 18%; }
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th:nth-child(3) { width: 12%; }
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th:nth-child(4) { width: 12%; }
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th:nth-child(5) { width: 13%; }
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table th:nth-child(6) { width: 20%; }
+
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td:first-child > .flex,
+body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td:first-child > .flex > div:last-child,
+body[data-dv-role="jefe"] #view-gestor #dropZone .dv-folder-toggle {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+body[data-dv-role="jefe"] #view-gestor #dropZone .dv-folder-toggle {
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+/* En pantallas medianas, colocar tarjetas de protección debajo del inventario. */
+@media (max-width: 1550px) {
+  body[data-dv-role="jefe"] #view-gestor .file-manager-shell:not(.subordinate-layout) {
+    grid-template-columns: 205px minmax(0, 1fr) !important;
+  }
+  body[data-dv-role="jefe"] #view-gestor .file-security-panel {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  body[data-dv-role="jefe"] #view-gestor .file-security-panel > .security-card {
+    flex: 1 1 230px;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  body[data-dv-role="jefe"] #view-gestor .file-manager-shell:not(.subordinate-layout) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  body[data-dv-role="jefe"] #view-gestor .file-explorer-panel {
+    border-right: 0 !important;
+    border-bottom: 1px solid #e4eaed !important;
+  }
+}
+
+/* En móviles los datos se distribuyen verticalmente, sin barra horizontal. */
+@media (max-width: 720px) {
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table,
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > thead {
+    display: none !important;
+  }
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 10px;
+    padding: 12px;
+    border-bottom: 1px solid #e6edf3;
+  }
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden) > td {
+    display: block !important;
+    min-width: 0;
+    padding: 5px 0 !important;
+    border: 0 !important;
+  }
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(1),
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(2),
+  body[data-dv-role="jefe"] #view-gestor #dropZone > .data-table > tbody > tr:not(.hidden):not(.dv-folder-detail) > td:nth-child(6) {
+    grid-column: 1 / -1;
+  }
+  body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td:nth-child(2)::before { content: 'Ubicación: '; font-weight: 700; }
+  body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td:nth-child(3)::before { content: 'Integridad '; display: block; font-weight: 700; }
+  body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td:nth-child(4)::before { content: 'Estado '; display: block; font-weight: 700; }
+  body[data-dv-role="jefe"] #view-gestor #dropZone .data-table td:nth-child(5)::before { content: 'Fecha '; display: block; font-weight: 700; }
+}

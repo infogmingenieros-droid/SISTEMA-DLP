@@ -19,7 +19,7 @@
 
 
 
-<link rel="stylesheet" href="images/ui/utilities.css?v=20261007-folderfix3"><link rel="stylesheet" href="images/ui/base.css?v=20261007-folders1"><link rel="stylesheet" href="images/ui/dashboard.css?v=20261007-folders1"><link rel="stylesheet" href="images/ui/subordinate.css?v=20261007-adminfiles1"><style>
+<link rel="stylesheet" href="images/ui/utilities.css?v=20261007-folderfix3"><link rel="stylesheet" href="images/ui/base.css?v=20261016-bulk2"><link rel="stylesheet" href="images/ui/dashboard.css?v=20261007-folders1"><link rel="stylesheet" href="images/ui/subordinate.css?v=20261016-drop1"><style>
 /* Logo completo, sin recortes. */
 body #sidebar .dv-app-brand{height:auto!important;min-height:126px!important;padding:10px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-shrink:0}
 .dv-logo-final{display:flex;align-items:center;justify-content:center;background:white;border-radius:9px;padding:7px;width:142px;height:106px;flex-shrink:0}
@@ -46,7 +46,7 @@ body[data-dv-role="subordinado"] #sidebar #dvQuotaFinal{display:none!important}
 /* Aplica el tema guardado antes de pintar la página para evitar parpadeos. */
 (function(){try{var d=document.documentElement,t=localStorage.getItem('dv-ui-theme')||'light';if(t==='system')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.setAttribute('data-theme',t==='dark'?'dark':'light');d.setAttribute('data-density',localStorage.getItem('dv-ui-density')||'normal');if(localStorage.getItem('dv-ui-reduce-motion')==='true')d.setAttribute('data-reduce-motion','true');}catch(e){}})();
 </script>
-<link rel="stylesheet" href="images/ui/theme-dark.css?v=20261015-b1">
+<link rel="stylesheet" href="images/ui/theme-dark.css?v=20261016-b3">
 <link rel="stylesheet" href="images/ui/theme.css?v=20261015-b1">
 </head>
 <body class="bg-slate-50 text-slate-800" data-dv-role="subordinado">
@@ -161,7 +161,7 @@ body[data-dv-role="subordinado"] #sidebar #dvQuotaFinal{display:none!important}
   <div class="page-title dv-simple-title"><div><h2>Mis solicitudes</h2><p>Consulta el estado de tus cargas y operaciones solicitadas.</p></div><button onclick="dvOpenFiles()" class="primary-btn"><i class="fa-regular fa-folder-open"></i>Ir a archivos</button></div>
   <div class="dv-request-tabs"><button class="active" type="button" data-request-state="" onclick="dvSelectRequestState('')" aria-pressed="true">Todas</button><button type="button" data-request-state="PENDIENTE" onclick="dvSelectRequestState('PENDIENTE')" aria-pressed="false">Pendientes</button><button type="button" data-request-state="APROBADO" onclick="dvSelectRequestState('APROBADO')" aria-pressed="false">Aprobadas</button><button type="button" data-request-state="RECHAZADO" onclick="dvSelectRequestState('RECHAZADO')" aria-pressed="false">Rechazadas</button></div>
   <div class="filter-bar dv-list-filter"><div class="relative flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2"></i><input id="solSearch" oninput="filterSolicitudesUI()" placeholder="Buscar solicitudes..." class="input-modern pl-9"></div><select id="solStateFilter" onchange="filterSolicitudesUI()" class="input-modern"><option value="">Todos los estados</option><option value="PENDIENTE">Pendiente</option><option value="APROBADO">Aprobado</option><option value="RECHAZADO">Rechazado</option></select><button onclick="loadCola()" class="icon-btn" title="Actualizar"><i class="fa-solid fa-rotate"></i></button></div>
-  <div class="dashboard-card overflow-hidden dv-list-card"><div class="section-head"><div><h3>Solicitudes registradas</h3><p id="solSummary">Cargando solicitudes...</p></div><span class="live-badge"><i class="fa-solid fa-circle"></i>En vivo</span></div><div class="overflow-x-auto"><table class="data-table"><thead><tr><th>ID</th><th>Tipo</th><th>Origen</th><th>Destino</th><th>Usuario</th><th>Fecha y hora</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="colaContainer"><tr><td colspan="8" class="p-8 text-center text-slate-400">Cargando solicitudes...</td></tr></tbody></table></div></div>
+  <div class="dashboard-card overflow-hidden dv-list-card"><div class="section-head"><div><h3>Solicitudes registradas</h3><p id="solSummary">Cargando solicitudes...</p></div><span class="live-badge"><i class="fa-solid fa-circle"></i>En vivo</span></div><div id="dvBulkBar" class="dv-bulk-bar hidden" role="region" aria-label="Acciones sobre la selección"><span class="dv-bulk-bar-info"><i class="fa-solid fa-square-check"></i><b id="dvBulkCount">0 seleccionados</b><small>Consejo: marca una casilla y usa Shift + clic en otra para seleccionar el rango.</small></span><button type="button" class="secondary-btn approve-outline" onclick="dvBulkDecideSelected('APROBAR')"><i class="fa-solid fa-check"></i> Aprobar seleccionados</button><button type="button" class="secondary-btn danger-outline" onclick="dvBulkDecideSelected('RECHAZAR')"><i class="fa-solid fa-xmark"></i> Rechazar seleccionados</button><button type="button" class="secondary-btn" onclick="dvBulkClear()" title="Limpiar selección" aria-label="Limpiar selección"><i class="fa-solid fa-eraser"></i></button></div><div id="dvBulkProgress" class="dv-bulk-progress hidden" role="status"></div><div class="overflow-x-auto"><table class="data-table"><thead><tr><th><span class="dv-bulk-id"><input type="checkbox" id="dvBulkAll" class="dv-bulk-check-all" onclick="dvBulkToggleAllVisible(this.checked)" aria-label="Seleccionar todas las solicitudes pendientes visibles" disabled>ID</span></th><th>Tipo</th><th>Origen</th><th>Destino</th><th>Usuario</th><th>Fecha y hora</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="colaContainer"><tr><td colspan="8" class="p-8 text-center text-slate-400">Cargando solicitudes...</td></tr></tbody></table></div></div>
   <div class="dv-mini-footer"><div class="mini-stat"><span>Pendientes</span><b id="solPendingMini">—</b></div><div class="mini-stat"><span>Estado</span><b class="text-emerald-600">En vivo</b></div><div class="mini-stat"><span>Rol actual</span><b id="solRoleMini">—</b></div></div>
 </section>
 <!-- ARCHIVOS -->
@@ -201,7 +201,7 @@ body[data-dv-role="subordinado"] #sidebar #dvQuotaFinal{display:none!important}
           <button type="button" class="dv-drive-toolbar-btn danger" onclick="dvActivateFileOperation('ELIMINAR')"><i class="fa-solid fa-trash-can"></i>Eliminar</button>
         </div>
       </div>
-      <div class="dv-sub-upload-start"><h3>Selecciona lo que deseas subir</h3><p>Agrega archivos o una carpeta, revisa el desglose y elige el destino antes de enviar.</p><div><button type="button" class="primary-btn" onclick="document.getElementById('fileInput').click()">Seleccionar archivos</button><button type="button" class="secondary-btn" onclick="document.getElementById('folderInput').click()">Seleccionar carpeta</button></div></div>
+      <div class="dv-sub-upload-start" id="dvUploadDropZone" aria-describedby="dvUploadDropHint"><div class="dv-drop-icon" aria-hidden="true"><i class="fa-solid fa-cloud-arrow-up"></i></div><h3 data-drop-idle>Arrastra y suelta archivos o una carpeta aquí</h3><h3 data-drop-over>Suelta para agregar</h3><p>O si prefieres, selecciónalos desde tu equipo. Luego revisa el desglose y elige el destino antes de enviar.</p><div class="dv-drop-actions"><button type="button" class="primary-btn" onclick="document.getElementById('fileInput').click()">Seleccionar archivos</button><button type="button" class="secondary-btn" onclick="document.getElementById('folderInput').click()">Seleccionar carpeta</button></div><small id="dvUploadDropHint" class="dv-drop-hint">Puedes soltar varios archivos a la vez o una carpeta completa (se conserva su estructura de subcarpetas).</small></div>
       <!-- Inputs de carga ocultos: la selección se abre desde “Nuevo” o “Subir archivo”. -->
       <input type="file" id="fileInput" class="hidden" multiple onchange="handleFilesSelected(this.files,false)">
       <input type="file" id="folderInput" class="hidden" webkitdirectory directory multiple onchange="handleFilesSelected(this.files,true)">
@@ -371,7 +371,7 @@ body[data-dv-role="subordinado"] #sidebar #dvQuotaFinal{display:none!important}
 
 
 
-<script src="images/ui/subordinate.js?v=20261007-folders1"></script><script src="images/ui/app.js?v=20261008-subfolders2"></script><script src="images/ui/dashboard.js?v=20261007-folders1"></script><script src="images/ui/theme-settings.js?v=20261015-b1"></script>
+<script src="images/ui/subordinate.js?v=20261007-folders1"></script><script src="images/ui/app.js?v=20261016-bulk2"></script><script src="images/ui/dashboard.js?v=20261007-folders1"></script><script src="images/ui/theme-settings.js?v=20261015-b1"></script>
 <script>
 (() => {
   let busy=false, last=0, identity='', generation=0;

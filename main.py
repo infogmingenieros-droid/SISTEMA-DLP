@@ -16,6 +16,7 @@ from fastapi import FastAPI, File, UploadFile, Request, Form, HTTPException, Bac
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.concurrency import run_in_threadpool
 from supabase import create_client, Client
 
 from google.oauth2.credentials import Credentials
@@ -8590,6 +8591,158 @@ async def decidir_custodia_desde_web(
     )
 
     return resultado
+
+
+CUSTODY_BATCH_MAX_ITEMS = 300
+
+
+def notificar_resultado_custodia_lote_web_telegram(
+    resueltos: list,
+    refrescar_menu: bool = True,
+):
+    """Actualiza las alertas de cada elemento y refresca la bandeja una sola vez."""
+    if not TELEGRAM_TOKEN or not AUTHORIZED_CHAT_IDS:
+        return
+
+    for item in resueltos:
+        try:
+            if item.get("objeto_tipo") == "CARPETA":
+                actualizar_alertas_subida_telegram(
+                    lote_id=item.get("lote_id"),
+                    estado=item.get("estado"),
+                )
+            else:
+                actualizar_alertas_subida_telegram(
+                    auditoria_id=item.get("auditoria_id"),
+                    estado=item.get("estado"),
+                )
+        except Exception as error:
+            print("[TELEGRAM CUSTODY BATCH ALERT ERROR]", error)
+
+    if not refrescar_menu:
+        return
+
+    for chat_id in AUTHORIZED_CHAT_IDS:
+        try:
+            mostrar_menu_usuarios(chat_id)
+        except Exception as error:
+            print("[TELEGRAM CUSTODY BATCH MENU ERROR]", error)
+
+
+@app.post("/custody/decision-batch")
+async def decidir_custodia_lote_desde_web(
+    request: Request,
+    background_tasks: BackgroundTasks
+):
+    """Aprueba o rechaza varias cargas pendientes en una sola petición.
+
+    Cada elemento se procesa por separado: si uno falla, los demás siguen y
+    la respuesta indica cuáles se resolvieron y cuáles no.
+    """
+
+    usuario = obtener_usuario_supabase_desde_request(request)
+
+    if usuario.get("rol") != "jefe":
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Solo el administrador puede "
+                "aprobar o rechazar cargas en cola."
+            ),
+        )
+
+    payload = await request.json()
+
+    decision = str(payload.get("decision") or "").upper().strip()
+    if decision not in ("APROBAR", "RECHAZAR"):
+        raise HTTPException(status_code=400, detail="decision inválida.")
+
+    items = payload.get("items")
+    # La web envía tandas pequeñas y pide refrescar la bandeja de Telegram
+    # solo en la última, para no enviar un menú nuevo por cada tanda.
+    refrescar_menu = payload.get("refrescar_menu", True) is not False
+
+    if isinstance(items, list) and not items and refrescar_menu:
+        background_tasks.add_task(notificar_resultado_custodia_lote_web_telegram, [], True)
+        return {"status": "ok", "decision": decision, "resueltos": 0, "archivos_procesados": 0, "fallidos": []}
+
+    if not isinstance(items, list) or not items:
+        raise HTTPException(status_code=400, detail="items debe ser una lista no vacía.")
+    if len(items) > CUSTODY_BATCH_MAX_ITEMS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Máximo {CUSTODY_BATCH_MAX_ITEMS} elementos por solicitud.",
+        )
+
+    aprobar = decision == "APROBAR"
+    resueltos = []
+    fallidos = []
+    vistos = set()
+
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        objeto_tipo = str(item.get("objeto_tipo") or "").upper().strip()
+        clave = (
+            objeto_tipo,
+            str(item.get("lote_id") or item.get("auditoria_id") or "").strip(),
+        )
+        if clave in vistos:
+            continue
+        vistos.add(clave)
+
+        try:
+            resultado = await run_in_threadpool(
+                resolver_payload_custodia_web,
+                item,
+                aprobar,
+            )
+            resueltos.append({
+                **resultado,
+                "objeto_tipo": objeto_tipo,
+                "lote_id": item.get("lote_id") or resultado.get("lote_id"),
+                "auditoria_id": item.get("auditoria_id") or resultado.get("auditoria_id"),
+            })
+        except HTTPException as error:
+            fallidos.append({
+                "objeto_tipo": objeto_tipo,
+                "id": clave[1],
+                "error": str(error.detail),
+            })
+        except Exception as error:
+            print("[CUSTODY WEB BATCH ERROR]", error)
+            if clave[1]:
+                filtro = (
+                    {"lote_id": clave[1]}
+                    if objeto_tipo == "CARPETA"
+                    else {"id": clave[1]}
+                )
+                marcar_procesamiento_seguro(
+                    "auditoria_custodia",
+                    filtro,
+                    PROCESAMIENTO_ERROR,
+                    error=str(error),
+                )
+            fallidos.append({
+                "objeto_tipo": objeto_tipo,
+                "id": clave[1],
+                "error": "No se pudo completar la decisión de custodia.",
+            })
+
+    if resueltos or refrescar_menu:
+        background_tasks.add_task(
+            notificar_resultado_custodia_lote_web_telegram,
+            resueltos,
+            refrescar_menu,
+        )
+
+    return {
+        "status": "ok" if not fallidos else ("partial" if resueltos else "error"),
+        "decision": decision,
+        "resueltos": len(resueltos),
+        "archivos_procesados": sum(int(r.get("procesados") or 0) for r in resueltos),
+        "fallidos": fallidos,
+    }
 
 
 @app.post("/custody/cancel")

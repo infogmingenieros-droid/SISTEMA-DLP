@@ -47,7 +47,7 @@ body[data-dv-role="subordinado"] #sidebar #dvQuotaFinal{display:none!important}
 (function(){try{var d=document.documentElement,t=localStorage.getItem('dv-ui-theme')||'light';if(t==='system')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.setAttribute('data-theme',t==='dark'?'dark':'light');d.setAttribute('data-density',localStorage.getItem('dv-ui-density')||'normal');if(localStorage.getItem('dv-ui-reduce-motion')==='true')d.setAttribute('data-reduce-motion','true');}catch(e){}})();
 </script>
 <link rel="stylesheet" href="images/ui/theme-dark.css?v=20261016-b3">
-<link rel="stylesheet" href="images/ui/theme.css?v=20261015-b1">
+<link rel="stylesheet" href="images/ui/theme.css?v=20261028-users1">
 </head>
 <body class="bg-slate-50 text-slate-800" data-dv-role="subordinado">
 
@@ -258,7 +258,7 @@ body[data-dv-role="subordinado"] #sidebar #dvQuotaFinal{display:none!important}
   </div>
   <div class="dashboard-card overflow-hidden">
     <div class="section-head"><div><h3>Usuarios registrados</h3><p>Aquí aparecen las cuentas creadas en el sistema, junto con su actividad de custodia.</p></div><span class="live-badge">● En vivo</span></div>
-    <div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Usuario</th><th>Correo</th><th>Archivos</th><th>Aprobados</th><th>Pendientes</th><th>Rechazados</th><th>Última actividad</th><th>Acción</th></tr></thead><tbody id="adminUsersBody"><tr><td colspan="8" class="p-8 text-center text-slate-400">Cargando usuarios...</td></tr></tbody></table></div>
+    <div class="overflow-x-auto dv-users-scroll"><table class="data-table dv-users-table"><thead><tr><th>Usuario</th><th>Correo</th><th>Archivos</th><th>Aprobados</th><th>Pendientes</th><th>Rechazados</th><th>Última actividad</th><th>Acción</th></tr></thead><tbody id="adminUsersBody"><tr><td colspan="8" class="p-8 text-center text-slate-400">Cargando usuarios...</td></tr></tbody></table></div>
   </div>
   <div id="adminUserDetail" class="dashboard-card overflow-hidden hidden">
     <div class="section-head"><div><h3 id="adminUserDetailName">Detalle de usuario</h3><p id="adminUserDetailEmail">—</p></div><button onclick="closeAdminUserDetail()" class="icon-btn"><i class="fa-solid fa-xmark"></i></button></div>
